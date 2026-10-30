@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emergency Department — Еженедельный отчёт</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Roboto,system-ui,sans-serif}
+body{min-height:100vh;background:linear-gradient(rgba(7,35,24,.72),rgba(12,62,40,.8)),url('background.jpg') center/cover fixed no-repeat;display:flex;justify-content:center;align-items:center;padding:20px}
+.report-card{width:100%;max-width:1200px;background:#fff;border-radius:42px;box-shadow:0 30px 60px -10px rgba(0,0,0,.6),0 0 0 2px #22a06b inset;overflow:hidden;position:relative}
+.report-card::before{content:'';position:absolute;width:300px;height:300px;background:radial-gradient(circle at 30% 30%,rgba(34,160,107,.25),transparent 70%);top:-100px;right:-100px;border-radius:50%;pointer-events:none}
+.header{background:rgba(255,255,255,.9);backdrop-filter:blur(8px);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #22a06b;position:relative;z-index:2}
+.logo-area{display:flex;align-items:center;gap:12px}.logo-icon{font-size:32px;color:#22a06b;filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))}.logo-text{font-weight:800;font-size:26px;letter-spacing:1px;background:linear-gradient(135deg,#176b48 0%,#22a06b 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.nav-links a{padding:10px 22px;font-size:17px;font-weight:600;border-radius:60px;color:#17382a;text-decoration:none;transition:.25s;display:inline-block}.nav-links a.active{background:#22a06b;color:#fff;box-shadow:0 8px 18px -6px #22a06b}.nav-links a:not(.active):hover{border:2px solid #22a06b;color:#176b48;padding:8px 20px}
+.page-content{padding:40px 48px;background:#eff8f3;position:relative;z-index:1;max-height:80vh;overflow-y:auto}.report-title{font-size:2.5rem;font-weight:800;color:#176b48;border-left:12px solid #22a06b;padding-left:24px;margin-bottom:34px;text-shadow:2px 2px 0 rgba(34,160,107,.2)}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 36px;margin-bottom:34px}.field-group{display:flex;flex-direction:column;gap:9px}.field-group.full-width{grid-column:span 2}.field-label{font-weight:650;font-size:1.1rem;color:#17382a;display:flex;align-items:flex-start;gap:10px;line-height:1.35}.field-label i{color:#22a06b;font-size:1.3rem;width:26px;text-align:center;flex:0 0 26px}
+.form-control{background:#fff;border:2px solid #c7e7d6;border-radius:20px;padding:13px 18px;font-size:1rem;transition:.2s;outline:none;box-shadow:0 4px 10px rgba(0,0,0,.03);width:100%}.form-control:focus{border-color:#22a06b;box-shadow:0 0 0 4px rgba(34,160,107,.18)}textarea.form-control{resize:vertical;min-height:70px}
+.submit-area{display:flex;flex-direction:column;align-items:center;gap:26px}.discord-btn{background:#22a06b;border:0;padding:16px 42px;border-radius:60px;font-size:1.35rem;font-weight:700;color:#fff;display:inline-flex;align-items:center;gap:16px;cursor:pointer;transition:.2s;box-shadow:0 8px 0 #176b48,0 10px 25px rgba(0,0,0,.3)}.discord-btn:hover{transform:translateY(-4px);box-shadow:0 12px 0 #176b48,0 16px 30px rgba(0,0,0,.35)}
+.embed-preview{background:#202d27;border-left:8px solid #22a06b;border-radius:16px;padding:22px 26px;color:#dcefe5;box-shadow:0 20px 30px -10px #193226;width:100%;max-width:760px}.embed-title{color:#fff;font-weight:700;font-size:1.35rem;margin-bottom:12px}.embed-field{margin:10px 0;display:flex;flex-wrap:wrap;border-bottom:1px solid #3d5046;padding-bottom:8px;gap:8px}.embed-field-name{color:#6ee7a8;font-weight:600;min-width:260px;font-size:.9rem}.embed-field-value{flex:1;word-break:break-word;white-space:pre-wrap}.embed-footer{margin-top:18px;color:#8aa397;font-size:.85rem;display:flex;gap:20px;border-top:1px solid #3d5046;padding-top:14px}
+@media(max-width:800px){body{padding:0}.report-card{border-radius:0;min-height:100vh}.header{padding:18px 20px;align-items:flex-start;gap:12px;flex-direction:column}.nav-links{justify-content:flex-start}.nav-links a{font-size:14px;padding:8px 12px}.page-content{padding:28px 20px;max-height:none}.form-grid{grid-template-columns:1fr;gap:20px}.field-group.full-width{grid-column:span 1}.report-title{font-size:2rem;padding-left:16px}
+}
+</style></head>
+<body><div class="report-card"><div class="header"><div class="logo-area"><i class="fas fa-truck-medical logo-icon"></i><span class="logo-text">EMERGENCY DEPARTMENT</span></div><nav class="nav-links"><a href="index.html"><i class="fas fa-home"></i> Главная</a><a href="weekly-report.html" class="active"><i class="fas fa-calendar-week"></i> Еженедельный отчёт</a></nav></div><main class="page-content"><h1 class="report-title"><i class="fas fa-clipboard-list"></i> Еженедельный отчёт</h1><form class="form-grid" id="weeklyForm">                <div class="field-group full-width">
+                    <label class="field-label"><i class="fas fa-id-card"></i> Имя и Фамилия</label>
+                    <input class="form-control" id="fullname" placeholder="Введите имя и фамилию" autocomplete="name">
+                </div>
+                <div class="field-group full-width">
+                    <label class="field-label"><i>💊</i> Таблетки</label>
+                    <textarea class="form-control" id="tablets" rows="2" placeholder="Ссылки на скриншоты выдачи таблеток"></textarea>
+                </div>
+                <div class="field-group full-width">
+                    <label class="field-label"><i>🆘</i> Зависимость (Скриншот момента помощи)</label>
+                    <textarea class="form-control" id="dependency" rows="2" placeholder="Ссылка на скриншот момента помощи"></textarea>
+                </div>
+                <div class="field-group full-width">
+                    <label class="field-label"><i>🏛️</i> Проверка гос.</label>
+                    <textarea class="form-control" id="stateCheck" rows="2" placeholder="Ссылка на скриншот проверки гос."></textarea>
+                </div>
+                <div class="field-group full-width">
+                    <label class="field-label"><i>🚑</i> Участие в МП/ГМП (Скриншот момента начала и конца мероприятия! Идут только мероприятия для гос!)</label>
+                    <textarea class="form-control" id="mpGmp" rows="2" placeholder="Ссылки на скриншоты начала и конца мероприятия"></textarea>
+                </div>
+                <div class="field-group full-width">
+                    <label class="field-label"><i>📦</i> Поставка</label>
+                    <textarea class="form-control" id="supply" rows="2" placeholder="Ссылки на скриншоты поставки"></textarea>
+                </div>
+                <div class="field-group full-width">
+                    <label class="field-label"><i>🚨</i> Вызовы</label>
+                    <textarea class="form-control" id="calls" rows="2" placeholder="Ссылки на скриншоты вызовов"></textarea>
+                </div>
+                <div class="field-group full-width">
+                    <label class="field-label"><i>🎖️</i> Участие в наборе Армии (Скриншот начала и конца набора)</label>
+                    <textarea class="form-control" id="army" rows="2" placeholder="Ссылки на скриншоты начала и конца набора"></textarea>
+                </div>
+                <div class="field-group full-width">
+                    <label class="field-label"><i>❤️</i> Реанимации</label>
+                    <textarea class="form-control" id="revive" rows="2" placeholder="Ссылки на скриншоты реанимаций"></textarea>
+                </div>
+                <div class="field-group full-width">
+                    <label class="field-label"><i>📚</i> Участие в лекции</label>
+                    <textarea class="form-control" id="lecture" rows="2" placeholder="Ссылки на скриншоты участия в лекции"></textarea>
+                </div>
+                <div class="field-group full-width">
+                    <label class="field-label"><i>📢</i> Пост в Холле 1 час+ (скриншот каждые 20 минут)</label>
+                    <textarea class="form-control" id="hall" rows="2" placeholder="Ссылки на скриншоты каждые 20 минут"></textarea>
+                </div>
+                <div class="field-group full-width">
+                    <label class="field-label"><i>✅</i> Проверка отчета</label>
+                    <textarea class="form-control" id="reportCheck" rows="2" placeholder="Ссылка на скриншот проверки отчёта"></textarea>
+                </div>
+</form><div class="submit-area"><button type="button" class="discord-btn" id="sendWeeklyReportBtn"><i class="fab fa-discord"></i> Отправить отчёт в Discord</button><div class="embed-preview" id="embedPreview"><div class="embed-title">📋 Еженедельный отчёт</div>                    <div class="embed-field"><span class="embed-field-name">👤 Имя и Фамилия</span><span class="embed-field-value" id="previewFullname">—</span></div>
+                    <div class="embed-field"><span class="embed-field-name">💊 Таблетки</span><span class="embed-field-value" id="previewTablets">—</span></div>
+                    <div class="embed-field"><span class="embed-field-name">🆘 Зависимость (Скриншот момента помощи)</span><span class="embed-field-value" id="previewDependency">—</span></div>
+                    <div class="embed-field"><span class="embed-field-name">🏛️ Проверка гос.</span><span class="embed-field-value" id="previewStateCheck">—</span></div>
+                    <div class="embed-field"><span class="embed-field-name">🚑 Участие в МП/ГМП (Скриншот момента начала и конца мероприятия! Идут только мероприятия для гос!)</span><span class="embed-field-value" id="previewMpGmp">—</span></div>
+                    <div class="embed-field"><span class="embed-field-name">📦 Поставка</span><span class="embed-field-value" id="previewSupply">—</span></div>
+                    <div class="embed-field"><span class="embed-field-name">🚨 Вызовы</span><span class="embed-field-value" id="previewCalls">—</span></div>
+                    <div class="embed-field"><span class="embed-field-name">🎖️ Участие в наборе Армии (Скриншот начала и конца набора)</span><span class="embed-field-value" id="previewArmy">—</span></div>
+                    <div class="embed-field"><span class="embed-field-name">❤️ Реанимации</span><span class="embed-field-value" id="previewRevive">—</span></div>
+                    <div class="embed-field"><span class="embed-field-name">📚 Участие в лекции</span><span class="embed-field-value" id="previewLecture">—</span></div>
+                    <div class="embed-field"><span class="embed-field-name">📢 Пост в Холле 1 час+ (скриншот каждые 20 минут)</span><span class="embed-field-value" id="previewHall">—</span></div>
+                    <div class="embed-field"><span class="embed-field-name">✅ Проверка отчета</span><span class="embed-field-value" id="previewReportCheck">—</span></div>
+<div class="embed-footer"><span>Emergency Department</span><span>🕒 только что</span></div></div></div></main></div>
+<script>
+const webhookUrl = 'https://discord.com/api/webhooks/1485302166179676254/mZzWWs8q1SPMehm8tA5kr31NEvataJjUVl-f7vTnOIvWh6zoLruPLCXYUDjhTssxEhkH';
+const fieldLabels = { fullname:'Имя и Фамилия', tablets:'Таблетки', dependency:'Зависимость (Скриншот момента помощи)', stateCheck:'Проверка гос.', mpGmp:'Участие в МП/ГМП (Скриншот момента начала и конца мероприятия! Идут только мероприятия для гос!)', supply:'Поставка', calls:'Вызовы', army:'Участие в наборе Армии (Скриншот начала и конца набора)', revive:'Реанимации', lecture:'Участие в лекции', hall:'Пост в Холле 1 час+ (скриншот каждые 20 минут)', reportCheck:'Проверка отчета' };
+function readValues() {
+        const values = { fullname: document.getElementById('fullname').value.trim() };
+        values.tablets = document.getElementById('tablets').value.trim();
+        values.dependency = document.getElementById('dependency').value.trim();
+        values.stateCheck = document.getElementById('stateCheck').value.trim();
+        values.mpGmp = document.getElementById('mpGmp').value.trim();
+        values.supply = document.getElementById('supply').value.trim();
+        values.calls = document.getElementById('calls').value.trim();
+        values.army = document.getElementById('army').value.trim();
+        values.revive = document.getElementById('revive').value.trim();
+        values.lecture = document.getElementById('lecture').value.trim();
+        values.hall = document.getElementById('hall').value.trim();
+        values.reportCheck = document.getElementById('reportCheck').value.trim();
+
+    return values;
+}
+function updatePreview() { const values=readValues();
+        document.getElementById('previewFullname').textContent = values.fullname || '—';
+        document.getElementById('previewTablets').textContent = values.tablets || '—';
+        document.getElementById('previewDependency').textContent = values.dependency || '—';
+        document.getElementById('previewStateCheck').textContent = values.stateCheck || '—';
+        document.getElementById('previewMpGmp').textContent = values.mpGmp || '—';
+        document.getElementById('previewSupply').textContent = values.supply || '—';
+        document.getElementById('previewCalls').textContent = values.calls || '—';
+        document.getElementById('previewArmy').textContent = values.army || '—';
+        document.getElementById('previewRevive').textContent = values.revive || '—';
+        document.getElementById('previewLecture').textContent = values.lecture || '—';
+        document.getElementById('previewHall').textContent = values.hall || '—';
+        document.getElementById('previewReportCheck').textContent = values.reportCheck || '—';
+}
+function validate(values) { for (const id of ['fullname','tablets','dependency','stateCheck','mpGmp','supply','calls','army','revive','lecture','hall','reportCheck']) { if (!values[id]) { alert(`Пожалуйста, заполните поле "${fieldLabels[id]}".`); document.getElementById(id).focus(); return false; } } return true; }
+document.querySelectorAll('.form-control').forEach(el=>el.addEventListener('input',updatePreview));
+document.getElementById('sendWeeklyReportBtn').addEventListener('click',async()=>{ const values=readValues(); if(!validate(values)) return; const embed={title:'📋 Еженедельный отчёт',color:0x22a06b,fields:[
+                    { name: '👤 Имя и Фамилия', value: values.fullname, inline: false },
+                    { name: '💊 Таблетки', value: values.tablets, inline: false },
+                    { name: '🆘 Зависимость (Скриншот момента помощи)', value: values.dependency, inline: false },
+                    { name: '🏛️ Проверка гос.', value: values.stateCheck, inline: false },
+                    { name: '🚑 Участие в МП/ГМП (Скриншот момента начала и конца мероприятия! Идут только мероприятия для гос!)', value: values.mpGmp, inline: false },
+                    { name: '📦 Поставка', value: values.supply, inline: false },
+                    { name: '🚨 Вызовы', value: values.calls, inline: false },
+                    { name: '🎖️ Участие в наборе Армии (Скриншот начала и конца набора)', value: values.army, inline: false },
+                    { name: '❤️ Реанимации', value: values.revive, inline: false },
+                    { name: '📚 Участие в лекции', value: values.lecture, inline: false },
+                    { name: '📢 Пост в Холле 1 час+ (скриншот каждые 20 минут)', value: values.hall, inline: false },
+                    { name: '✅ Проверка отчета', value: values.reportCheck, inline: false }
+],footer:{text:'Emergency Department'},timestamp:new Date().toISOString()}; try{ const response=await fetch(webhookUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[embed]})}); if(response.ok) alert('✅ Еженедельный отчёт успешно отправлен в Discord!'); else alert('❌ Ошибка при отправке. Проверьте Webhook URL.'); }catch(error){console.error(error);alert('❌ Ошибка сети или неверный Webhook URL.');} });
+updatePreview();
+</script></body></html>
